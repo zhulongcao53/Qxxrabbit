@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="posts">
+    {% for post in posts %}
+        <section class="post">
+            <header class="post-header">
+                <h2 class="post-title"><p align ='center'>{{ post.title }}</p></h2>
+
+                    <p class = "post-meta"; align = 'center'>
+                        时间:  <a class="post-author" href="#">{{ post.timestamp }}</a> <a class="post-category" href="#">{{ post.category }}</a>
+                    </p>
+            </header>
+                <div class="post-description">
+                    <p>
+                        {{ post.body|safe}}
+                    </p>
+                </div>
+        </section>
+    {% endfor %}
+</div><!-- /.blog-post -->
+{% load duoshuo_tags %}
+{% duoshuo_comments %}
+
+{% endblock %}
+

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="posts">
+    {% if error %}
+        <h2 class="post-title">没有相关内容</a></h2>
+    {% else %}
+    {% for post in post_list %}
+        <section class="post">
+            <header class="post-header">
+                <h2 class="post-title"><a href="/?id={{post.id}}">{{ post.title }}</a></h2>
+
+                    <p class="post-meta">
+                        时间:  <a class="post-author" href="#">{{ post.timestamp |date:'Y /m /d'}}</a> <a class="post-category" href="{% url 'search_tag' tag=post.category %}">{{ post.category }}</a>
+                    </p>
+            </header>
+        </section>
+    {% endfor %}
+    {% endif %}
+</div><!-- /.blog-post -->
+{% endblock %}

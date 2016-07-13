@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% autoescape off %}
+{{infoContent}}
+{% endautoescape %}
+{% block content %}
+<head>
+<style type="text/css">
+.inline_element {
+	display: inline-block;
+}
+</style>
+</head>
+<div class="posts">
+	{% for post in post_list %}
+		<section class="post">
+			<header class="post-header">
+				<h2 class="post-title"><!--<a href='/blog/?id={{post.id}}'>-->{{ post.title }}</h2>
+					<p class="post-meta">
+						时间:  <a class="post-author" href="#">{{ post.timestamp }}</a> <a class="post-category" href="{% url 'search_tag' tag=post.category %}">{{ post.category|title }}</a>
+					</p>
+			</header>
+				<div class="post-description">
+                    <p>
+						{{post.body|safe|truncatechars:100 }}
+                    </p>
+		    <h5><a href='/?id={{post.id}}'>阅读全文>></a></h5>
+                </div>
+        </section>
+    {% endfor %}
+    {% if post_list.object_list and post_list.paginator.num_pages > 1 %}
+		<div>
+			<ul class="pagination">
+				{% if post_list.has_previous %}
+					<li class="inline_element"><a href="?page={{ post_list.previous_page_number }}">上一页</a></li>
+				{% endif %}
+				{% for page in post_list.paginator.page_range %}
+					{% if page = post_list.number %}
+						<li class="inline_element"><a class='paginator_current' title='當前頁:{{ page }}'>{{ page }}</a></li>
+					{% else %}
+						<li class="inline_element"><a class='paginator' href='?page={{ page }}' title='{{ page }}'>{{ page }}</a></li>
+					{% endif %}
+				{% endfor %}
+				{% if post_list.has_next %}
+					<li class="inline_element"><a href="?page={{ post_list.next_page_number }}">下一页</a></li>
+				{% endif %}
+			</ul>
+		</div>
+    {% endif %} 	
+</div>
+{% endblock %}
